@@ -1,0 +1,121 @@
+---
+title: "group assignment"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Group 5
+Alice, Faten, Zineb, Debora
+Regression data R1
+http://users.stat.ufl.edu/~winner/data/airline_costs.txt
+http://users.stat.ufl.edu/~winner/data/airline_costs.dat
+
+J.W. Proctor and J.S. Duncan (1954). "A Regression Analysis
+of Airline Costs," Journal of Air Law and Commerce, Vol.21, #3
+https://scholar.smu.edu/cgi/viewcontent.cgi?article=2903&context=jalc
+
+
+                infos:
+
+submit as pdf by email noon 16.4. first draft, noon 20.6. final
+
+include relevant plots (must look nice)
+No raw R code
+see lab2
+12 pt font, 2,5 cm margins, our surnames in top margin, number pages at bottom, 3-5 pages max, no cover page
+ 
+
+
+                outline: 
+
+give background, state the problem of interest (aim of original study)
+
+exploratory data analysis EDA
+
+model fitting and selection analysis
+
+model assessment, justify the results
+
+final model (written in mathematical terms), include evtl shortcomings of this model 
+
+conclusion, address problem of interest
+
+```{r plot}
+
+data = read.csv("airline_costs.dat", head=FALSE, sep="")
+
+par(mfrow = c(2,4))
+
+plot(log(data$V6) ~ log(data$V2))
+plot(log(data$V6) ~ log(data$V3))
+plot(log(data$V6) ~ log(data$V4))
+plot(log(data$V6) ~ log(data$V5))
+plot(log(data$V6) ~ log(data$V7))
+plot(log(data$V6) ~     data$V8)
+plot(log(data$V6) ~ log(data$V9))
+plot(log(data$V6) ~ log(data$V10))
+
+```
+
+
+```{r boxplots}
+
+par(mfrow = c(2,5))
+
+boxplot(data$V2, main = "V2")
+boxplot(data$V3, main = "V3")
+boxplot(data$V4, main = "V4")
+boxplot(data$V5, main = "V5")
+boxplot(data$V6, main = "V6")
+boxplot(data$V7, main = "V7")
+boxplot(data$V8, main = "V8")
+boxplot(data$V9, main = "V9")
+boxplot(data$V10, main = "V10")
+boxplot(data$V12, main = "V12")
+
+par(mfrow = c(1,1))
+
+```
+
+```{r log model}
+
+mod <- lm(log(data$V6) ~ log(data$V2)+log(data$V3)+log(data$V4)+log(data$V5)+data$V8+log(data$V9)+log(data$V10)-1)
+
+# do we want V10 (total assets) or V12 (adjusted assets)?
+# V7 and V11?
+# source: important: V8, V9, V4
+#        not important: V2, V5, V3, V10
+# V1 Airline
+# V2 Length of flight (miles)         
+# V3 Speed of Plane (miles per hour)  
+# V4 Daily Flight Time per plane (hours)
+# V5 Population served (1000s)        
+# V6 Total Operating Cost (cents per revenue ton-mile)
+# V7 Revenue Tons per Aircraft mile
+# V8 Ton-Mile load factor (proportion)  
+# V9 Available Capacity (Tons per mile)  
+# V10 Total Assets  ($100,000s)         
+# V11 Investments and Special Funds  ($100,000s)
+# V12 Adjusted Assets  ($100,000s)
+
+summary(mod)
+
+```
+
+
+```{r smaller models}
+mod2 <- lm(log(data$V6) ~ log(data$V3)+data$V8+log(data$V9)-1)
+#conclusion from model above
+summary(mod2)
+plot(mod2)
+
+mod3 <- lm(log(data$V6) ~ log(data$V4)+data$V8+log(data$V9)-1)
+#suggested in source
+summary(mod3)
+plot(mod3)
+```
+
+
