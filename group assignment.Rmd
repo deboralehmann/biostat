@@ -85,9 +85,9 @@ par(mfrow = c(1,1))
 mod <- lm(log(data$V6) ~ log(data$V2)+log(data$V3)+log(data$V4)+log(data$V5)+data$V8+log(data$V9)+log(data$V10)-1)
 
 # do we want V10 (total assets) or V12 (adjusted assets)?
-# V7 and V11?
 # source: important: V8, V9, V4
 #        not important: V2, V5, V3, V10
+
 # V1 Airline
 # V2 Length of flight (miles)         
 # V3 Speed of Plane (miles per hour)  
