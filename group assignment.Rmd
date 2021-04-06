@@ -102,7 +102,6 @@ mod <- lm(log(data$V6) ~ log(data$V2)+log(data$V3)+log(data$V4)+log(data$V5)+dat
 # V12 Adjusted Assets  ($100,000s)
 
 summary(mod)
-
 ```
 
 
@@ -117,5 +116,25 @@ mod3 <- lm(log(data$V6) ~ log(data$V4)+data$V8+log(data$V9)-1)
 summary(mod3)
 plot(mod3)
 ```
+
+
+```{r without influential obervation}
+data2 <- data
+data2[6,] <- NA
+data2[30,] <- NA
+
+modbis <- lm(log(data2$V6) ~ log(data2$V2)+log(data2$V3)+log(data2$V4)+log(data2$V5)+data2$V8+log(data2$V9)+log(data2$V10)-1)
+summary(modbis)
+par(mfrow = c(2,2))
+plot(modbis)
+
+mod2bis <- lm(log(data2$V6) ~ log(data2$V3)+data2$V8+log(data2$V9)-1)
+summary(mod2bis)
+plot(mod2bis)
+```
+
+
+
+
 
 
